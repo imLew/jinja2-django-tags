@@ -7,7 +7,7 @@ from datetime import datetime
 
 from django.conf import settings
 from django.templatetags.static import static as django_static
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.formats import date_format, localize
 from django.utils.timezone import get_current_timezone, template_localtime
 from django.utils.translation import npgettext, pgettext, ugettext, ungettext
@@ -258,17 +258,17 @@ class DjangoI18n(Extension):
             finalized_trans_vars = trans_vars
         if plural is None:
             if context is None:
-                return ugettext(force_text(singular)) % finalized_trans_vars
+                return ugettext(force_str(singular)) % finalized_trans_vars
             else:
-                return pgettext(force_text(context), force_text(singular)) % finalized_trans_vars
+                return pgettext(force_str(context), force_text(singular)) % finalized_trans_vars
         else:
             if context is None:
                 return ungettext(
-                    force_text(singular), force_text(plural), trans_vars[count_var]
+                    force_str(singular), force_text(plural), trans_vars[count_var]
                 ) % finalized_trans_vars
             else:
                 return npgettext(
-                    force_text(context), force_text(singular), force_text(plural),
+                    force_str(context), force_text(singular), force_text(plural),
                     trans_vars[count_var]
                 ) % finalized_trans_vars
 
@@ -414,7 +414,7 @@ class DjangoUrl(Extension):
         # That's why we have to check if it's a string literal first.
         token = parser.stream.current
         if token.test(lexer.TOKEN_STRING):
-            expr = nodes.Const(force_text(token.value), lineno=token.lineno)
+            expr = nodes.Const(force_str(token.value), lineno=token.lineno)
             next(parser.stream)
         else:
             expr = parser.parse_expression(False)
