@@ -10,7 +10,7 @@ from django.templatetags.static import static as django_static
 from django.utils.encoding import force_str
 from django.utils.formats import date_format, localize
 from django.utils.timezone import get_current_timezone, template_localtime
-from django.utils.translation import npgettext, pgettext, ugettext, ungettext
+from django.utils.translation import npgettext, pgettext, gettext, ungettext
 from jinja2 import lexer, nodes
 from jinja2.ext import Extension
 
@@ -90,8 +90,8 @@ class DjangoI18n(Extension):
 
     def __init__(self, environment):
         super(DjangoI18n, self).__init__(environment)
-        environment.globals['_'] = ugettext
-        environment.globals['gettext'] = ugettext
+        environment.globals['_'] = gettext
+        environment.globals['gettext'] = gettext
         environment.globals['pgettext'] = pgettext
 
     def _parse_trans(self, parser, lineno):
@@ -258,7 +258,7 @@ class DjangoI18n(Extension):
             finalized_trans_vars = trans_vars
         if plural is None:
             if context is None:
-                return ugettext(force_str(singular)) % finalized_trans_vars
+                return gettext(force_str(singular)) % finalized_trans_vars
             else:
                 return pgettext(force_str(context), force_text(singular)) % finalized_trans_vars
         else:

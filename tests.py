@@ -55,7 +55,7 @@ class DjangoI18nTestBase(SimpleTestCase):
         return 'count alt translated'
 
     def setUp(self):
-        gettext_patcher = mock.patch('jdj_tags.extensions.ugettext', side_effect=self._gettext)
+        gettext_patcher = mock.patch('jdj_tags.extensions.gettext', side_effect=self._gettext)
         pgettext_patcher = mock.patch('jdj_tags.extensions.pgettext', side_effect=self._pgettext)
         ngettext_patcher = mock.patch('jdj_tags.extensions.ungettext', side_effect=self._ngettext)
         npgettext_patcher = mock.patch('jdj_tags.extensions.npgettext', side_effect=self._npgettext)
