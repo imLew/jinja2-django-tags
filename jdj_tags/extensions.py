@@ -10,7 +10,7 @@ from django.templatetags.static import static as django_static
 from django.utils.encoding import force_str
 from django.utils.formats import date_format, localize
 from django.utils.timezone import get_current_timezone, template_localtime
-from django.utils.translation import npgettext, pgettext, gettext, ungettext
+from django.utils.translation import npgettext, pgettext, gettext, ngettext
 from jinja2 import lexer, nodes
 from jinja2.ext import Extension
 
@@ -263,7 +263,7 @@ class DjangoI18n(Extension):
                 return pgettext(force_str(context), force_text(singular)) % finalized_trans_vars
         else:
             if context is None:
-                return ungettext(
+                return ngettext(
                     force_str(singular), force_text(plural), trans_vars[count_var]
                 ) % finalized_trans_vars
             else:
